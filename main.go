@@ -7,7 +7,7 @@ import (
     "runtime"
 )
 
-func NewProcess(name string, arg ...string) (*Process, error) {
+func NewProcess(bufSize int, name string, arg ...string) (*Process, error) {
     var err error
     p := &Process{}
     p.shouldEnd = false
@@ -28,10 +28,10 @@ func NewProcess(name string, arg ...string) (*Process, error) {
     p.inReady = make(chan struct{})
     p.outReady = false
     p.errReady = false
-    p.outbuf = make([]byte, 2048)
-    p.errbuf = make([]byte, 2048)
-    p.outBuffer = make([]byte, 2048)
-    p.errBuffer = make([]byte, 2048)
+    p.outbuf = make([]byte, bufSize)
+    p.errbuf = make([]byte, bufSize)
+    p.outBuffer = make([]byte, bufSize)
+    p.errBuffer = make([]byte, bufSize)
     p.outIndex = 0
     p.errIndex = 0
     p.outCond = sync.NewCond(&p.outMutex)
