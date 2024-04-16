@@ -41,6 +41,18 @@ func (p *Process) Send(s string) {
     p.inReady <- struct{}{}
 }
 
+func (p *Process) ReadyOut() bool {
+    p.outMutex.Lock()
+    defer p.outMutex.Unlock()
+    return p.outReady
+}
+
+func (p *Process) ReadyErr() bool {
+    p.errMutex.Lock()
+    defer p.errMutex.Unlock()
+    return p.errReady
+}
+
 func (p *Process) RecvOut() (string, error) {
     p.outMutex.Lock()
     defer p.outMutex.Unlock()
