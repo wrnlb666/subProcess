@@ -7,12 +7,13 @@ import (
     "runtime"
 )
 
-func NewProcess(bufSize int, name string, arg ...string) (*Process, error) {
+func NewProcess(bufSize int, dir string, name string, arg ...string) (*Process, error) {
     var err error
     p := &Process{}
     p.shouldEnd = false
     cmd := exec.Command(name, arg...)
     p.cmd = cmd
+    p.cmd.Dir = dir
     if p.in, err = p.cmd.StdinPipe(); err != nil {
         return nil, err
     }
