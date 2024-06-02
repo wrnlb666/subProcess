@@ -36,6 +36,10 @@ func (p *Process) Wait() error {
     return p.cmd.Wait()
 }
 
+func (p *Process) Kill() error {
+    return p.cmd.Process.Kill()
+}
+
 func (p *Process) Send(s string) {
     p.inBuffer = s
     p.inReady <- struct{}{}
